@@ -13,7 +13,7 @@ import { throwIfEmpty } from 'rxjs/operators';
 export class PublishComponent implements OnInit {
 
   closeResult:String;
-  post;
+  users;
   compartir;
   publishing=
   { "id": 0, "titulo": "", "descripcion": "", "compartir": false,
@@ -30,14 +30,14 @@ export class PublishComponent implements OnInit {
   ngOnInit(): void {
   /*  if(sessionStorage.user == undefined)
       this.router.navigateByUrl('/login');
-    else
-      this.publishing.usuario = JSON.parse(sessionStorage.user);
-      this.publishService.getPostByIdUsuario(this.publishing.usuario.id).subscribe(
+    else*/
+      //this.publishing.usuario = JSON.parse(sessionStorage.user);
+      this.publishService.getUsers().subscribe(
         (post) =>{
-          this.post = post;
+          this.users = post;
           
         }
-      );*/
+      );
   }
 
   update(content, user){

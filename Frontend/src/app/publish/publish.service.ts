@@ -8,11 +8,19 @@ import { catchError, tap, map } from 'rxjs/operators';
 })
 export class PublishService {
 
-  serverUrlUsers='http://localhost:8082/api/post';
+  serverUrlUsers='http://localhost:8082/api/usuario';
 
   constructor(public http: HttpClient) { }
 
   getPost():
+    Observable<any[]> {
+      return this.http.get<any[]>(this.serverUrlUsers).pipe(
+        tap(data => console.log(JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+    }
+
+  getUsers():
     Observable<any[]> {
       return this.http.get<any[]>(this.serverUrlUsers).pipe(
         tap(data => console.log(JSON.stringify(data))),
