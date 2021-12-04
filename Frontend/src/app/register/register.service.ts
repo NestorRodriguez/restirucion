@@ -27,7 +27,7 @@ export class RegisterService {
     Observable<any> {
       return this.http.post<any[]>(this.serverUrlUsers, user).pipe(
         tap(data => 
-          console.log("serverUrlParameter"
+          console.log(JSON.stringify(data),
           )),
         catchError(this.handleError)
       );

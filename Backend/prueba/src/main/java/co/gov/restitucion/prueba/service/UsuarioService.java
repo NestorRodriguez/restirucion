@@ -22,7 +22,16 @@ public class UsuarioService implements IUsuarioService{
 
 	@Override
 	public Usuario create(Usuario usuario) {
-		return this.usuarioDao.save(usuario);
+		Usuario user = this.usuarioDao.findUsuarioByDocumento(usuario.getDocumento());
+		if(user == null) {
+			user = this.usuarioDao.findUsuarioByUserName(usuario.getUsername());
+			if(user == null)
+				return this.usuarioDao.save(usuario);
+			else
+				return new Usuario();
+		}
+		else
+			return new Usuario();
 	}
 
 	@Override
@@ -37,7 +46,7 @@ public class UsuarioService implements IUsuarioService{
 
 	@Override
 	public Usuario getUser(Usuario usuario) {
-		return this.usuarioDao.findUsuarioByMail(usuario.getEmail());
+		return this.usuarioDao.findUsuarioByUserName(usuario.getUsername());
 	}
 
 }

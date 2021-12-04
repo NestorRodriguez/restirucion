@@ -19,17 +19,14 @@ export class RegisterComponent implements OnInit {
   secondLastName: String;
   email: String;
   numero: String;
-  password: String;
-  user;
   tipoDocumento;
   tiposDocumentos : any;
   genero;
   generos : any;
   username: String;
-  rol;
   loading$ = this.loader.loading$;
   data;
-  roles: any ;
+  user;
   
 
   constructor(
@@ -52,6 +49,17 @@ export class RegisterComponent implements OnInit {
         this.genero = -1;
         this.tipoDocumento = -1;
   }
+  clear(){
+    this.name="";
+    this.secondName="";
+    this.lastName="";
+    this.secondLastName="";
+    this.email="";
+    this.numero="";
+    this.username="";
+    this.genero = -1;
+    this.tipoDocumento = -1;
+  }
 
   register(){
     if(this.genero == -1 || this.tipoDocumento == -1)
@@ -61,47 +69,46 @@ export class RegisterComponent implements OnInit {
       segundoNombre: this.secondName,
       apellido: this.lastName,
       segundoApellido: this.secondLastName,
-      numero: this.numero,
+      documento: this.numero,
       tipoDocumento: {
         "id":this.tipoDocumento,
-        "descripcion":""
-      },
-      genero:{
-        "id":this.genero,
-        "descripcion":""
-      },
-      ususrio: this.username,
-      mail: this.email, 
-      rol: {
-        "id":this.rol,
         "descripcion":"",
         "estado":"",
         "idTipoParametro":""
-      }
+      },
+      genero:{
+        "id":this.genero,
+        "descripcion":"",
+        "estado":"",
+        "idTipoParametro":""
+      },
+      username: this.username,
+      email: this.email, 
     };
     this.tiposDocumentos.forEach(element => {
       if(element.id == this.tipoDocumento){
         usuario.tipoDocumento = element;
       }
     });
+    this.generos.forEach(element => {
+      if(element.id == this.genero){
+        usuario.genero = element;
+      }
+    });
     console.log(usuario)
-    // this.user = this.registerService.register(usuario).subscribe(
-    //   data => {
-    //     this.user = data;
-    //     if( data.id ==0 ){
-    //       this.data= {tittle : "Mensaje", message : "Usted ya se encuentra registrado en el sistema"};
-    //       this.dialogbox.dialogBox(this.data.message);
-    //     }
-    //     else{
-    //       this.data= {tittle : "Mensaje", message : "Usuario registrado con éxito, por favor, inicie sesión"};
-    //       this.dialogbox.dialogBox(this.data.message);
-    //       this.router.navigateByUrl('/login'); 
-    //     }
-    //     this.email="";
-    //     this.password="";
-    //     this.name="";
-    //     this.rol=0;
-    //   }
-    // )
+    this.user = this.registerService.register(usuario).subscribe(
+      data => {
+        this.user = data;
+        if( data.id ==0 ){
+          this.data= {tittle : "Mensaje", message : "Usted ya se encuentra registrado en el sistema"};
+          this.dialogbox.dialogBox(this.data.message);
+        }
+        else{
+          this.data= {tittle : "Mensaje", message : "Usuario registrado con éxito"};
+          this.dialogbox.dialogBox(this.data.message);
+        }
+        this.clear();
+      }
+    )
   } 
 }
