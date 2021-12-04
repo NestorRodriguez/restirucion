@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="login">
+    <form class="custom-form" method="post" novalidate (ngSubmit)="login()" #f="ngForm">
+      <h2>Inicio de sesión</h2>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="Email"
+        required
+        class="form-control"
+      />
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="Password"
+        required
+        class="form-control"
+      />
+      <button type="submit" color="primary" [disabled]="f.invalid">Ingresar</button>
+      <a routerLink="/register" color="btn-success"><label>No estás registrado</label></a>
+    </form>
+    <mat-progress-spinner [mode]="'indeterminate'" *ngIf=loading$|async></mat-progress-spinner>
+  </div>

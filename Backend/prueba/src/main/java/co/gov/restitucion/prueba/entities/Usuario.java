@@ -51,10 +51,22 @@ public class Usuario implements Serializable {
 	private String nombre;
 	
 	/**
+	 * Nombre del usuario
+	 */
+	@Column(name = "SEGUNDO_NOMBRE")
+	private String nombreSegundo;
+	
+	/**
 	 * Apellido del usuario
 	 */
 	@Column(name = "APELLIDO", nullable = false)
 	private String apellido;
+	
+	/**
+	 * Apellido del usuario
+	 */
+	@Column(name = "SEGUNDO_APELLIDO")
+	private String apellidoSegundo;
 
 	/**
 	 * Documento del usuario
@@ -235,15 +247,29 @@ public class Usuario implements Serializable {
 	public void setTipoDocumento(Parametro tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
+	
+	public String getNombreSegundo() {
+		return nombreSegundo;
+	}
+
+	public void setNombreSegundo(String nombreSegundo) {
+		this.nombreSegundo = nombreSegundo;
+	}
+
+	public String getApellidoSegundo() {
+		return apellidoSegundo;
+	}
+
+	public void setApellidoSegundo(String apellidoSegundo) {
+		this.apellidoSegundo = apellidoSegundo;
+	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", documento=" + documento
-				+ ", estado=" + estado + ", username=" + username + ", email=" + email + ", genero=" + genero
-				+ ", tipoDocumento=" + tipoDocumento + "]";
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", nombreSegundo=" + nombreSegundo + ", apellido="
+				+ apellido + ", apellidoSegundo=" + apellidoSegundo + ", documento=" + documento + ", estado=" + estado
+				+ ", username=" + username + ", email=" + email + ", genero=" + genero + ", tipoDocumento="
+				+ tipoDocumento + "]";
 	}
-
-
-	
 
 }
