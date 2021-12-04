@@ -1,5 +1,5 @@
-# restirucion
-#Para correr el proyecto en local:
+# Restitucion
+# Para correr el proyecto en local:
 1. Clonar el repositorio
 2. Abrir postgres y crear un esquema que se llame restitución
 3. Instalar node y java JDK 1.8
