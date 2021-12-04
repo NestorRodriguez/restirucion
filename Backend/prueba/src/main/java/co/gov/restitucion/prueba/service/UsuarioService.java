@@ -40,13 +40,24 @@ public class UsuarioService implements IUsuarioService{
 	}
 
 	@Override
-	public void delete(int id) {
-		this.usuarioDao.deleteById((long) id);
+	public void delete(long id) {
+		this.usuarioDao.deleteById(id);
 	}
 
 	@Override
-	public Usuario getUser(Usuario usuario) {
-		return this.usuarioDao.findUsuarioByUserName(usuario.getUsername());
+	public Usuario getUser(String username, String documento) {
+		if((username == null && documento == null) || (username == "" && documento == "")) {
+			return new Usuario();
+		}
+		else if(documento != null || documento != "") {
+			return this.usuarioDao.findUsuarioByDocumento(documento);
+		}
+		else if(username != null || username != "") {
+			return this.usuarioDao.findUsuarioByUserName(username);
+		}
+		else {
+			return this.usuarioDao.findUsuarioByDocumento(documento);
+		}
 	}
 
 }

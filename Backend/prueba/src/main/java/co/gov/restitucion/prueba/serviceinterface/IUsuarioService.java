@@ -12,8 +12,8 @@ public interface IUsuarioService {
 	
 	public Usuario update(Usuario usuario, int id);
 	
-	public void delete(int id);
+	public void delete(long id);
 	
-	public Usuario getUser(Usuario usuario);
+	public Usuario getUser(String username, String ddocumento);
 	
 }

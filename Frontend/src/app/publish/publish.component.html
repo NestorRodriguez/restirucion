@@ -1,8 +1,28 @@
 <app-header></app-header>
-<div class="card border-primary mb-3" style="">
-    <div class="card-header">Emprendimientos o productos </div>
-    <div class="card-body text-primary">
-      <h3 class="card-title">Listado</h3>
+<div class="login">
+  <form class="custom-form" method="post" novalidate (ngSubmit)="find()" #f="ngForm">
+    <h2>Busqueda de usuarios</h2>
+    <input
+      type="documento"
+      [(ngModel)]="documento"
+      name="documento"
+      placeholder="Número de documento"
+      class="form-control"
+    />
+    <input
+      type="username"
+      [(ngModel)]="username"
+      name="username"
+      placeholder="Nombre de usuario"
+      class="form-control"
+    />
+    <button type="submit" color="primary" [disabled]="f.invalid">Buscar</button>
+  </form>
+  <mat-progress-spinner [mode]="'indeterminate'" *ngIf=loading$|async></mat-progress-spinner>
+</div>
+<div class="card mb-3 custom-form result" style="">
+  <h2 class="">Resultado de la busqueda</h2>  
+  
       <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -17,7 +37,7 @@
           <tbody>
             <tr *ngFor="let item of users">
                 <td>{{item.id}}</td>
-                <td>{{item.name}} {{item.lastName}}</td>
+                <td>{{item.nombre}} {{item.apellido}}</td>
                 <td>{{item.tipoDocumento.descripcion}}</td>
                 <td>{{item.documento}}</td>
                 <td>{{item.genero.descripcion}}</td>
@@ -25,9 +45,9 @@
                     <section>
                         <div class="example-button-row">
                           <div class="example-flex-container">
-                            <button mat-mini-fab color="primary" aria-label="update" (click)="update(contentUpdate, item)">
+                            <!-- <button mat-mini-fab color="primary" aria-label="update" (click)="update(contentUpdate, item)">
                               <mat-icon>update</mat-icon>
-                            </button>
+                            </button> -->
                             <button mat-mini-fab color="link" aria-label="delete" (click)=delete(item.id)>
                               <mat-icon>delete</mat-icon>
                             </button>
@@ -38,12 +58,8 @@
             </tr>
           </tbody>
       </table>
-    </div>
+    
   </div>
-
-<div class="addButton" color="primary">
-    <button  type="button" class="btn btn-success" (click)=addPost(contentNew) >Agregar</button>
-</div>
 
 <ng-template #contentNew let-modal>
     <div class="modal-header">

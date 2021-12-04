@@ -1,5 +1,6 @@
 package co.gov.restitucion.prueba.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", methods={RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", methods={RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE})
 public class UsuarioController {
 	
 	@Autowired
@@ -29,6 +30,11 @@ public class UsuarioController {
 	@GetMapping("/usuario")
 	public List<Usuario> index(){
 		return usuarioService.findAll();
+	}
+	
+	@PostMapping("/usuario/find")
+	public Usuario findByUserOrDocument(@RequestBody Usuario usuario){
+		return usuarioService.getUser(usuario.getUsername(), usuario.getDocumento()); 
 	}
 	
 	@PostMapping("/usuario")
@@ -43,6 +49,6 @@ public class UsuarioController {
 	
 	@DeleteMapping("/usuario/{id}")
 	public void delete(@PathVariable int id) {
-		this.usuarioService.delete(id);
+		this.usuarioService.delete((int) id);
 	}
 }

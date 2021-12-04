@@ -28,6 +28,14 @@ export class PublishService {
       );
     }
 
+  findByUserOrDocument(usuario):
+    Observable<any> {
+      return this.http.post<any[]>(this.serverUrlUsers+"/find", usuario).pipe(
+        tap(data => console.log("Busqueda")),
+        catchError(this.handleError)
+      );
+    }
+
   getPostByIdUsuario(id):
     Observable<any[]> {
       return this.http.get<any[]>(this.serverUrlUsers+"/"+id).pipe(

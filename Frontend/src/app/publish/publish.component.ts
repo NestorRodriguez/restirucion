@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PublishService } from './publish.service';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { throwIfEmpty } from 'rxjs/operators';
+import { DialogService } from '../services/dialog/dialog.service';
+import { LoadingService } from '../services/loading/loading.service';
 
 
 @Component({
@@ -12,8 +13,14 @@ import { throwIfEmpty } from 'rxjs/operators';
 })
 export class PublishComponent implements OnInit {
 
+  documento: String;
+  username: String;
   closeResult:String;
-  users;
+  users = new Array<Object>();
+  usersTemp;
+  user;
+  data;
+  loading$ = this.loader.loading$;
   compartir;
   publishing=
   { "id": 0, "titulo": "", "descripcion": "", "compartir": false,
@@ -25,44 +32,42 @@ export class PublishComponent implements OnInit {
     private publishService: PublishService, 
     public router:Router,
     private modalService: NgbModal,
+    public loader: LoadingService,
+    public dialogbox: DialogService,
     ) { }
 
   ngOnInit(): void {
-  /*  if(sessionStorage.user == undefined)
-      this.router.navigateByUrl('/login');
-    else*/
-      //this.publishing.usuario = JSON.parse(sessionStorage.user);
-      this.publishService.getUsers().subscribe(
-        (post) =>{
-          this.users = post;
-          
+
+  }
+
+  find(){
+    if(this.documento == "") this.documento=null;
+    if(this.username == "") this.username=null;
+    console.log(this.documento)
+    console.log(this.username)
+    const usuario = {
+      documento: this.documento,
+      username: this.username,
+      
+    };
+    this.user = this.publishService.findByUserOrDocument(usuario).subscribe(
+      data => {
+        console.log(data)
+        this.user = data;
+        if( data.id == 0 ){
+          this.data= {tittle : "Mensaje", message : "No hubo resultados en su busqueda"};
+          this.dialogbox.dialogBox(this.data.message);
+          if(this.users.length > 0){
+            this.users.pop()
+          }
+          //this.users = this.usersTemp;
         }
-      );
-  }
-
-  update(content, user){
-    this.publishing.id = user.id;
-    this.publishing.titulo = user.titulo;
-    this.publishing.descripcion = user.descripcion;
-    this.publishing.compartir == true ? this.compartir=1 : this.compartir=0;  
-    this.publishing.usuario = user.usuario;
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  addPost(content) {
-    /*this.publishing.titulo = user.titulo;
-    this.publishing.descripcion = user.descripcion;*/
-    this.publishing.usuario = JSON.parse( sessionStorage.user);
-    //console.log(this.publishing);
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+        else{
+          this.users.push(data);
+        }
+        
+      }
+    )
   }
 
   private getDismissReason(reason: any): string {
@@ -74,26 +79,10 @@ export class PublishComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  register(){
-    this.compartir == 1 ? this.publishing.compartir=true: this.publishing.compartir=false;
-    this.publishService.update(this.publishing).subscribe(
-      data => {
-        console.log("successful");
-        window.location.reload();
-        this.publishing = 
-        { "id": 0, "titulo": "", "descripcion": "", "compartir": false,
-          "usuario": { "id": 0, "password": "", "nombre": "", "mail": "",
-          "rol": { "id": 0, "descripcion": ""}}
-        }
-      },
-      error=>{
-
-      }
-    )
-  }
-  
+ 
 
   delete(id){
+    console.log(id)
     this.publishService.delete(id).subscribe(
       data => {
         console.log("successful");

@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
         "descripcion":"",
         "estado":"",
         "idTipoParametro":""
-      },
+      },  
       genero:{
         "id":this.genero,
         "descripcion":"",
@@ -95,7 +95,6 @@ export class RegisterComponent implements OnInit {
         usuario.genero = element;
       }
     });
-    console.log(usuario)
     this.user = this.registerService.register(usuario).subscribe(
       data => {
         this.user = data;
