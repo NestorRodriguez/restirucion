@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import co.gov.restitucion.prueba.daointerface.IUsuarioDao;
 import co.gov.restitucion.prueba.entities.Usuario;
-import co.gov.restitucion.prueba.serviceinterface.IUsuarioServe;
+import co.gov.restitucion.prueba.serviceinterface.IUsuarioService;
 
 @Service
-public class UsuarioService implements IUsuarioServe{
+public class UsuarioService implements IUsuarioService{
 
 	@Autowired
 	private IUsuarioDao usuarioDao;

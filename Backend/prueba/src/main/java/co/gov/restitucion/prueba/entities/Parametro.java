@@ -14,7 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQueries(value = {
-		@NamedQuery(name = "Parametro.findParametroByTipoParametro", query = "SELECT p FROM Parametro p WHERE p.tipoParametro = :tipoParametro and p.estado = :estado"),
+		@NamedQuery(name = "Parametro.findParametroByTipoParametro", query = "SELECT p FROM Parametro p WHERE p.tipoParametro.id = :tipoParametro and p.estado = :estado"),
 		@NamedQuery(name = "Parametro.findAllParametro", query = "SELECT p FROM Parametro p"),
 	 })
 

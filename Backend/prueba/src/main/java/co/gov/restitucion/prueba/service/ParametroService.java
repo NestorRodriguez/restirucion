@@ -36,8 +36,8 @@ public class ParametroService implements IParametroService{
 	}
 
 	@Override
-	public Parametro getUser(Parametro Parametro) {
-		return this.parametroDao.findParametroByTipoParametro(Parametro.getTipoParametro(), Parametro.isEstado());
+	public List<Parametro> getUser(int idTipoParametro, boolean estado) {
+		return this.parametroDao.findParametroByTipoParametro(idTipoParametro, estado);
 	}
 
 }

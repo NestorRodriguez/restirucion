@@ -14,6 +14,6 @@ public interface IParametroService {
 	
 	public void delete(int id);
 	
-	public Parametro getUser(Parametro Parametro);
+	public List<Parametro> getUser(int idTipoParametro, boolean estado);
 
 }

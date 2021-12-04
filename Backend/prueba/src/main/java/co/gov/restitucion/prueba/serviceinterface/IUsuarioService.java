@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.gov.restitucion.prueba.entities.Usuario;
 
-public interface IUsuarioServe {
+public interface IUsuarioService {
 	
 	public List<Usuario> findAll();
 
