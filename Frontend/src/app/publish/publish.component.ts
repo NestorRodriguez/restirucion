@@ -52,15 +52,13 @@ export class PublishComponent implements OnInit {
     };
     this.user = this.publishService.findByUserOrDocument(usuario).subscribe(
       data => {
-        console.log(data)
+        if(this.users.length > 0){
+          this.users.pop()
+        }
         this.user = data;
         if( data.id == 0 ){
           this.data= {tittle : "Mensaje", message : "No hubo resultados en su busqueda"};
           this.dialogbox.dialogBox(this.data.message);
-          if(this.users.length > 0){
-            this.users.pop()
-          }
-          //this.users = this.usersTemp;
         }
         else{
           this.users.push(data);

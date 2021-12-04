@@ -49,14 +49,27 @@ public class UsuarioService implements IUsuarioService{
 		if((username == null && documento == null) || (username == "" && documento == "")) {
 			return new Usuario();
 		}
-		else if(documento != null || documento != "") {
-			return this.usuarioDao.findUsuarioByDocumento(documento);
+		else if(documento != null) {
+			Usuario userDocumento = this.usuarioDao.findUsuarioByDocumento(documento);
+			if(userDocumento == null)
+				return new Usuario();
+			else 
+				return userDocumento;
 		}
-		else if(username != null || username != "") {
-			return this.usuarioDao.findUsuarioByUserName(username);
+		else if(username != null) {
+			System.out.println("Busqueda de usuarios");
+			Usuario userName = this.usuarioDao.findUsuarioByUserName(username);
+			if(userName == null)
+				return new Usuario();
+			else
+				return userName; 
 		}
 		else {
-			return this.usuarioDao.findUsuarioByDocumento(documento);
+			Usuario user = this.usuarioDao.findUsuarioByDocumento(documento);
+			if(user == null)
+				return new Usuario();
+			else
+				return user; 
 		}
 	}
 
